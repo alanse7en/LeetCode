@@ -16,20 +16,50 @@
 
 using namespace std;
 
-struct ListNode {
-    int val;
-    ListNode* next;
-    ListNode(int x) : val(x), next(NULL) {}
-};
-
-class Solution {
+namespace Solution {
     
-public:
+    struct ListNode {
+        int val;
+        ListNode* next;
+        ListNode(int x) : val(x), next(NULL) {}
+    };
+    
+    /*  Helper Functions    */
+    // For addTwoNumbers
+    int getValueAndMoveNext(ListNode* & l) {
+        int x = 0;
+        if (l != NULL) {
+            x = l->val;
+            l = l->next;
+        }
+        
+        return x;
+    }
+    // For median of two sorted arrays. Find the k-th element of two sorted arrays
+    // 重点在于舍弃不可能出现第k大的部分，被舍弃的部分的数全都小于第k大的数
+    double findKth(int A[], int m, int B[], int n, int k) {
+        if (m > n)
+            return findKth(B, n, A, m, k);
+        if (m == 0)
+            return B[k-1];
+        if (k == 1)
+            return min(A[0],B[0]);
+        
+        int pa = min(k/2,m); int pb = k-pa;
+        
+        if (A[pa-1] < B[pb-1])
+            return findKth(A+pa, m-pa, B, n, k-pa);
+        else if (A[pa-1] > B[pb-1])
+            return findKth(A, m, B+pb, n-pb, k-pb);
+        else
+            return A[pa-1];
+    }
+/*  Functions to solve LeetCode problems    */
     /*
      Two Sum
      把剩余的值存入tmp的map中，利用map搜索的速度的优势降低复杂度
      */
-    static vector<int> twoSum(vector<int>& numbers, int target) {
+    vector<int> twoSum(vector<int>& numbers, int target) {
         map<int,int> tmp;
         vector<int> result;
         
@@ -50,7 +80,7 @@ public:
      Add two Numbers
      注意t的连接node的作用，以及不要忘记最后有可能进位
      */
-    static ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         ListNode* result = NULL;
         ListNode** t = &result;
         int carry = 0; int tmp = 0;
@@ -75,7 +105,7 @@ public:
      Length of longest sub-string
      将字符的位置存入map中，通过在map中查询是否出现过当前的字符判断是否重复，注意是否更新lastRepeatPos还取决于当前的LRP和重复字符的位置
      */
-    static int lengthOfLongestSubstring(string s) {
+    int lengthOfLongestSubstring(string s) {
         int result = 0;
         int lastRepeatPos = -1;
         map<char, int> m;
@@ -94,7 +124,7 @@ public:
      Find median of two sorted arrays
      难点在于对复杂度的要求是log(m+n)，解决寻找第k大的问题之后，中位数的问题自然解决
      */
-    static double findMedianSortedArrays(int A[], int m, int B[], int n) {
+    double findMedianSortedArrays(int A[], int m, int B[], int n) {
         if ( (m+n)%2 == 0 )
             return (findKth(A, m, B, n, (m+n)/2)+
                     findKth(A, m, B, n, (m+n)/2+1))/2;
@@ -106,7 +136,7 @@ public:
      Count and say
      比较简单的一题，只需注意将最后的结果读入到字符串中
      */
-    static string countAndSay(int n) {
+    string countAndSay(int n) {
         string seq = "1";
         int ite = 1;
         while (ite < n) {
@@ -130,36 +160,7 @@ public:
         return seq;
     }
     
-private:
-    // For addTwoNumbers
-    static int getValueAndMoveNext(ListNode* & l) {
-        int x = 0;
-        if (l != NULL) {
-            x = l->val;
-            l = l->next;
-        }
-        
-        return x;
-    }
-    // For median of two sorted arrays. Find the k-th element of two sorted arrays
-    // 重点在于舍弃不可能出现第k大的部分，被舍弃的部分的数全都小于第k大的数
-    static double findKth(int A[], int m, int B[], int n, int k) {
-        if (m > n)
-            return findKth(B, n, A, m, k);
-        if (m == 0)
-            return B[k-1];
-        if (k == 1)
-            return min(A[0],B[0]);
-        
-        int pa = min(k/2,m); int pb = k-pa;
-        
-        if (A[pa-1] < B[pb-1])
-            return findKth(A+pa, m-pa, B, n, k-pa);
-        else if (A[pa-1] > B[pb-1])
-            return findKth(A, m, B+pb, n-pb, k-pb);
-        else
-            return A[pa-1];
-    }
+    // End of namespace
 };
 
 #endif
