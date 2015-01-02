@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 
 using namespace std;
 
@@ -63,6 +64,21 @@ public:
         if (carry > 0) {
             ListNode* node = new ListNode (carry);
             *t = node;
+        }
+        
+        return result;
+    }
+    
+    static int lengthOfLongestSubstring(string s) {
+        int result = 0;
+        int lastRepeatPos = -1;
+        map<char, int> m;
+        for (int i = 0; i < s.size(); ++i) {
+            if (m.find(s[i])!=m.end() && lastRepeatPos<m[s[i]])
+                lastRepeatPos = m[s[i]];
+            if (i-lastRepeatPos > result)
+                result = i - lastRepeatPos;
+            m[s[i]] = i;
         }
         
         return result;
