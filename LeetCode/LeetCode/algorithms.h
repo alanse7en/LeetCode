@@ -160,6 +160,41 @@ namespace Solution {
         return seq;
     }
     
+    /*
+     Remove element
+     */
+    int removeElement(int A[], int n, int elem) {
+        for (int i = 0; i < n; ++i) {
+            if (A[i] == elem) {
+                move(A+i+1, A+n, A+i);
+                // move i-th element to the end of the array
+                --n;
+                --i;
+            }
+        }
+        
+        return n;
+    }
+    
+    
+    /*
+     Pascal triangle II
+     */
+    vector<int> getRow(int rowIndex) {
+        vector<int> row = {1};
+        for (int i = 0; i < rowIndex; ++i) {
+            vector<int> newRow;
+            newRow.push_back(1);
+            if (row.size() > 1) {
+                for (int k = 0; k < row.size()-1; ++k)
+                    newRow.push_back(row[k]+row[k+1]);
+            }
+            newRow.push_back(1);
+            row = newRow;
+        }
+        
+        return row;
+    }
     // End of namespace
 };
 

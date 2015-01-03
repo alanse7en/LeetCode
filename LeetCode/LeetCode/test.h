@@ -41,7 +41,10 @@ TEST(MedianOfTwoSortedArraysTest, TestCase) {
     int B[] = {1};
     double res = Solution::findMedianSortedArrays(A, 3, B, 1);
     EXPECT_EQ(2.5, res);
-    
+    int C[] = {};
+    int D[] = {1};
+    res = Solution::findMedianSortedArrays(C, 0, D, 1);
+    EXPECT_EQ(1.0, res);
 }
 
 TEST(CountAndSayTest, TestCase) {
@@ -60,6 +63,26 @@ TEST(CountAndSayTest, TestCase) {
     EXPECT_EQ(s4, Solution::countAndSay(5));
     EXPECT_EQ(s5, Solution::countAndSay(6));
     EXPECT_EQ(s6, Solution::countAndSay(7));
+}
+
+TEST(RemoveElementTest, TestCase) {
+    int A1[] = {4,5};
+    int res = Solution::removeElement(A1, 2, 4);
+    EXPECT_EQ(1, res);
+    int A2[] = {1,2,3,2,3,4,5};
+    res = Solution::removeElement(A2, 7, 2);
+    EXPECT_EQ(5, res);
+}
+
+TEST(PascalTriangleIITest, TestCase) {
+    vector<int> res0 = {1};
+    vector<int> res1 = {1,1};
+    vector<int> res2 = {1,2,1};
+    vector<int> res3 = {1,3,3,1};
+    EXPECT_EQ(res0, Solution::getRow(0));
+    EXPECT_EQ(res1, Solution::getRow(1));
+    EXPECT_EQ(res2, Solution::getRow(2));
+    EXPECT_EQ(res3, Solution::getRow(3));
 }
 
 #endif
