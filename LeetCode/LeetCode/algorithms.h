@@ -168,9 +168,7 @@ namespace Solution {
         return seq;
     }
     
-    /*
-     Remove element
-     */
+    /*    Remove element    */
     int removeElement(int A[], int n, int elem) {
         for (int i = 0; i < n; ++i) {
             if (A[i] == elem) {
@@ -185,26 +183,18 @@ namespace Solution {
     }
     
     
-    /*
-     Pascal triangle II
-     */
+    /*    Pascal triangle II    */
     vector<int> getRow(int rowIndex) {
-        vector<int> row = {1};
-        for (int i = 0; i < rowIndex; ++i) {
-            vector<int> newRow;
-            newRow.push_back(1);
-            if (row.size() > 1) {
-                for (int k = 0; k < row.size()-1; ++k)
-                    newRow.push_back(row[k]+row[k+1]);
-            }
-            newRow.push_back(1);
-            row = newRow;
+        vector<int> row(rowIndex+1,0);
+        row[0] = row[rowIndex] = 1;
+        for (int m = 1; m < rowIndex/2 + 1; ++m) {
+            row[m] = row[rowIndex-m] = (int)row[m-1]*(rowIndex-m+1)/m;
         }
         
         return row;
     }
     
-    // Depth of a tree
+    /*    Depth of a tree    */
     int maxDepth(TreeNode* root) {
         if (!root)
             return 0;
