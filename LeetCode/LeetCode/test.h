@@ -85,4 +85,9 @@ TEST(PascalTriangleIITest, TestCase) {
     EXPECT_EQ(res3, Solution::getRow(3));
 }
 
+TEST(MaxDepthTest, HandleOneNode) {
+    Solution::TreeNode node0(0);
+    EXPECT_EQ(1, Solution::maxDepth(&node0));
+}
+
 #endif

@@ -13,6 +13,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <stack>
 
 using namespace std;
 
@@ -23,6 +24,13 @@ namespace Solution {
         ListNode* next;
         ListNode(int x) : val(x), next(NULL) {}
     };
+    
+    struct TreeNode {
+            int val;
+            TreeNode *left;
+            TreeNode *right;
+            TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+        };
     
     /*  Helper Functions    */
     // For addTwoNumbers
@@ -194,6 +202,52 @@ namespace Solution {
         }
         
         return row;
+    }
+    
+    // Depth of a tree
+    int maxDepth(TreeNode* root) {
+        if (!root)
+            return 0;
+        
+        stack<TreeNode*> s;
+        int maxD = 0;
+        TreeNode* prev = NULL;
+        TreeNode* curr = root;
+        TreeNode* peak = NULL;
+        
+        while (!s.empty() || curr!=NULL) {
+            if (curr != NULL) {
+                s.push(curr);
+                curr = curr->left;
+            }
+            else {
+                peak = s.top();
+                if (peak->right!=NULL && prev!=peak->right)
+                    curr = peak->right;
+                else {
+                    if (s.size() > maxD)
+                        maxD = (int)s.size();
+                    prev = peak;
+                    s.pop();
+                }
+            }
+        }
+        
+        return maxD;
+    }
+    
+    /*  Balanced binary tree    */
+    bool isBalanced(TreeNode* root) {
+        if (root == NULL)
+            return true;
+        if (root->left==NULL && root->right==NULL)
+            return true;
+        
+        int diff = abs(maxDepth(root->left) - maxDepth(root->right));
+        if (diff > 1)
+            return false;
+        
+        return (isBalanced(root->left) && isBalanced(root->right));
     }
     // End of namespace
 };
