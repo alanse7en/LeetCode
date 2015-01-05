@@ -14,6 +14,8 @@
 #include <string>
 #include <sstream>
 #include <stack>
+#include <queue>
+#include <utility>
 
 using namespace std;
 
@@ -184,6 +186,7 @@ namespace Solution {
     
     
     /*    Pascal triangle II    */
+    // C(n,m) = n!/(m!*(n-m)!)  C(n,m) = ((n-m+1)/m)*C(n,m-1)
     vector<int> getRow(int rowIndex) {
         vector<int> row(rowIndex+1,0);
         row[0] = row[rowIndex] = 1;
@@ -195,6 +198,7 @@ namespace Solution {
     }
     
     /*    Depth of a tree    */
+    // Post order search, faster than recursive
     int maxDepth(TreeNode* root) {
         if (!root)
             return 0;
@@ -226,7 +230,36 @@ namespace Solution {
         return maxD;
     }
     
-    /*  Balanced binary tree    */
+    /*    Minimum depth of a binary tree    */
+    // Level order search. Breaks out when find the minimum depth.
+    int minDepth(TreeNode *root) {
+        typedef pair<TreeNode*, int> treePair;
+        
+        if (!root)
+            return 0;
+        
+        int depth = 0;
+        queue<treePair> q;
+        q.push(treePair(root,1));
+        treePair next(NULL,0);
+        
+        while (!q.empty()) {
+            next = q.front();
+            q.pop();
+            if (next.first->left==NULL && next.first->right==NULL) {
+                depth = next.second;
+                break;
+            }
+            if (next.first->left != NULL)
+                q.push(treePair(next.first->left,next.second+1));
+            if (next.first->right != NULL)
+                q.push(treePair(next.first->right,next.second+1));
+        }
+        
+        return depth;
+    }
+    
+    /*    Balanced binary tree    */
     bool isBalanced(TreeNode* root) {
         if (root == NULL)
             return true;

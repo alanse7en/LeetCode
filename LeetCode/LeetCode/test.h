@@ -90,4 +90,8 @@ TEST(MaxDepthTest, HandleOneNode) {
     EXPECT_EQ(1, Solution::maxDepth(&node0));
 }
 
+TEST(MinDepthTest, HandleOneNode) {
+    Solution::TreeNode node0(0);
+    EXPECT_EQ(1, Solution::minDepth(&node0));
+}
 #endif
