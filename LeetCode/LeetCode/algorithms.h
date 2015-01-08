@@ -16,6 +16,7 @@
 #include <stack>
 #include <queue>
 #include <utility>
+#include <memory>
 
 using namespace std;
 
@@ -271,6 +272,134 @@ namespace Solution {
             return false;
         
         return (isBalanced(root->left) && isBalanced(root->right));
+    }
+    
+    /*    ZigZag conversion    */
+    string convert(string s, int nRows) {
+        if (nRows <= 1)
+            return s;
+        
+        const int len = (int)s.length();
+        vector<string> str;
+        str.resize(nRows, "");
+        
+        int row = 0, step = 1;
+        for (int i = 0; i < len; ++i)
+        {
+            str[row].push_back(s[i]);
+            
+            if (row == 0)
+                step = 1;
+            else if (row == nRows - 1)
+                step = -1;
+            
+            row += step;
+        }
+        
+        string res;
+        for (int j = 0; j < nRows; ++j)
+        {
+            res.append(str[j]);
+        }
+        
+        return res;
+    }
+    
+    /*    Majority element    */
+    int majorityElement(vector<int> &num) {
+        map<int,int> m;
+        int n = (int)num.size();
+        for (auto ite = num.cbegin(); ite != num.cend(); ++ite) {
+            if (m.find(*ite)!=m.end())
+                m[*ite] += 1;
+            else
+                m[*ite] = 1;
+        }
+        
+        for (auto ite = m.cbegin(); ite != m.cend(); ++ite) {
+            if (ite->second > n/2)
+                return ite->first;
+        }
+        
+        return 0;
+    }
+    
+    /*    Post order traversal of binary tree    */
+    vector<int> postorderTraversal(TreeNode *root) {
+        vector<int> vec;
+        stack<TreeNode*> s;
+        TreeNode* node = root;
+        TreeNode* peak = NULL;
+        TreeNode* prev = NULL;
+        
+        while (!s.empty() || node!=NULL) {
+            if (node!=NULL) {
+                s.push(node);
+                node = node->left;
+            }
+            else {
+                peak = s.top();
+                if (peak->right!=NULL && prev != peak->right)
+                    node = peak->right;
+                else {
+                    vec.push_back(peak->val);
+                    prev = peak;
+                    s.pop();
+                }
+            }
+        }
+        
+        return vec;
+    }
+    
+    
+    /*    Inorder traversal of binary tree    */
+    vector<int> inorderTraversal(TreeNode *root) {
+        vector<int> vec;
+        stack<TreeNode*> s;
+        TreeNode* node = root;
+        TreeNode* peak = NULL;
+        TreeNode* prev = NULL;
+        
+        while (!s.empty() || node!=NULL) {
+            if(node!=NULL) {
+                s.push(node);
+                node = node->left;
+            }
+            else {
+                peak = s.top();
+                vec.push_back(peak->val);
+                if (peak->right != NULL) {
+                    node = peak->right;
+                }
+                s.pop();
+            }
+        }
+        
+        
+        return vec;
+    }
+    
+    /*    Preorder traversal of binary tree    */
+    vector<int> preorderTraversal(TreeNode *root) {
+        vector<int> vec;
+        stack<TreeNode*> s;
+        TreeNode* node = root;
+        
+        while (!s.empty() || node!=NULL) {
+            if (node!=NULL) {
+                vec.push_back(node->val);
+                s.push(node);
+                node = node->left;
+            }
+            else {
+                node = s.top();
+                node = node->right;
+                s.pop();
+            }
+        }
+        
+        return vec;
     }
     // End of namespace
 };

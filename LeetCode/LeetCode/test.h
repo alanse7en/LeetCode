@@ -94,4 +94,19 @@ TEST(MinDepthTest, HandleOneNode) {
     Solution::TreeNode node0(0);
     EXPECT_EQ(1, Solution::minDepth(&node0));
 }
+
+TEST(ZigZagTest, TestCase) {
+    string test = "PAYPALISHIRING";
+    string res =  "PAHNAPLSIIGYIR";
+    EXPECT_EQ(res, Solution::convert(test, 3));
+}
+
+TEST(MajorityTest, TestCase) {
+    vector<int> iv ({1});
+    EXPECT_EQ(1, Solution::majorityElement(iv));
+    iv = {1,1,2};
+    EXPECT_EQ(1, Solution::majorityElement(iv));
+    iv = {1,2,1,3};
+    EXPECT_EQ(1, Solution::majorityElement(iv));
+}
 #endif
