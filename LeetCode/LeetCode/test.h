@@ -106,7 +106,16 @@ TEST(MajorityTest, TestCase) {
     EXPECT_EQ(1, Solution::majorityElement(iv));
     iv = {1,1,2};
     EXPECT_EQ(1, Solution::majorityElement(iv));
-    iv = {1,2,1,3};
+    iv = {1,2,1,3,1};
     EXPECT_EQ(1, Solution::majorityElement(iv));
+}
+
+TEST(SingleNumberTest, TestCase) {
+    int a0[] = {1};
+    EXPECT_EQ(1, Solution::singleNumber(a0, 1));
+    int a1[] = {2,1,2};
+    EXPECT_EQ(1, Solution::singleNumber(a1, 3));
+    int a2[] = {2,1,2,3,3};
+    EXPECT_EQ(1, Solution::singleNumber(a2, 5));
 }
 #endif

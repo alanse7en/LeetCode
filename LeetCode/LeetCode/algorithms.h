@@ -359,7 +359,6 @@ namespace Solution {
         stack<TreeNode*> s;
         TreeNode* node = root;
         TreeNode* peak = NULL;
-        TreeNode* prev = NULL;
         
         while (!s.empty() || node!=NULL) {
             if(node!=NULL) {
@@ -401,6 +400,25 @@ namespace Solution {
         
         return vec;
     }
+    
+    /*    Single number    */
+    // A^A = 0
+    int singleNumber(int A[], int n) {
+        while (--n) {
+            A[n-1] ^= A[n];
+        }
+        
+        return A[0];
+    }
+    
+    /*    Same tree    */
+    bool isSameTree(TreeNode *p, TreeNode *q) {
+        if (p==NULL && q==NULL)
+            return true;
+        else
+            return (p&&q) && (p->val==q->val) && isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
+    }
+    
     // End of namespace
 };
 
