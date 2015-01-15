@@ -118,4 +118,20 @@ TEST(SingleNumberTest, TestCase) {
     int a2[] = {2,1,2,3,3};
     EXPECT_EQ(1, Solution::singleNumber(a2, 5));
 }
+
+TEST(ConvertToTitleTest, TestCase) {
+    EXPECT_EQ("A", Solution::convertToTitle(1));
+    EXPECT_EQ("B", Solution::convertToTitle(2));
+    EXPECT_EQ("Z", Solution::convertToTitle(26));
+    EXPECT_EQ("AA", Solution::convertToTitle(26*1+1));
+    EXPECT_EQ("AAA", Solution::convertToTitle(26*27+1));
+}
+
+TEST(TitleToNumberTest, TestCase) {
+    EXPECT_EQ(1, Solution::titleToNumber("A"));
+    EXPECT_EQ(2, Solution::titleToNumber("B"));
+    EXPECT_EQ(26, Solution::titleToNumber("Z"));
+    EXPECT_EQ(27, Solution::titleToNumber("AA"));
+    EXPECT_EQ(26*27+1, Solution::titleToNumber("AAA"));
+}
 #endif

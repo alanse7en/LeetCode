@@ -17,6 +17,7 @@
 #include <queue>
 #include <utility>
 #include <memory>
+#include <math.h>
 
 using namespace std;
 
@@ -419,6 +420,33 @@ namespace Solution {
             return (p&&q) && (p->val==q->val) && isSameTree(p->left,q->left) && isSameTree(p->right,q->right);
     }
     
+    /*    Excel Sheet Column Title    */
+    string convertToTitle(int n) {
+        string result;
+        while(n>0){
+            char ch = 'A' + (n-1)%26;
+            result = ch + result;
+            n -= (n-1)%26;
+            n /= 26;
+        }
+        return result;
+    }
+    
+    /*    Excel Sheet Column Number    */
+    int titleToNumber(string s) {
+        int result = 0;
+        int i = 0;
+        
+        while (!s.empty()) {
+            char back = s.back();
+            int tmp = (back-'A') + 1;
+            result += tmp*pow(26,i);
+            s.pop_back();
+            ++i;
+        }
+        
+        return result;
+    }
     // End of namespace
 };
 
